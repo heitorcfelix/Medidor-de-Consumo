@@ -1,6 +1,6 @@
 var http = require('http');
 var fs = require('fs');
-var MongoClient = require('mongodb').MongoClient;
+var sqlite3 = require('sqlite3').verbose();
 var express = require('express');
 var bodyParser = require('body-parser');
 
@@ -12,16 +12,26 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 var valor_atual;
 
-var url = "mongodb://localhost:27017/";
-MongoClient.connect(url, function(err, db) {
-    if (err) throw err;
-    var dbo = db.db("Medidor_de_Consumo");
-    var mysort = { _id: -1 };
-    dbo.collection("Medidor_de_Consumo").find().sort(mysort).toArray(function(err, result) {
-        if (err) throw err;
-        valor_atual = result[0].valor_medido;
-        db.close();
-    });
+
+let db = new sqlite3.Database('database.db', sqlite3.OPEN_READONLY, (err) => {
+    if (err) {
+    console.error(err.message);
+    }
+});
+
+let sql = `SELECT id id,
+           valor_medido valor_medido
+           FROM medidor_de_consumo
+           ORDER BY id DESC;`
+
+db.get(sql, [], (err, row) => {
+    valor_atual = row.valor_medido;
+}); 
+
+db.close((err) => {
+    if (err) {
+    console.error(err.message);
+    }
 });
 
 app.get("/", (req, res) => { res.render("index", { name: valor_atual}); });
