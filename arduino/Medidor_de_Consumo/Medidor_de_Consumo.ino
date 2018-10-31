@@ -6,6 +6,7 @@ EnergyMonitor emon1;                        // Cria uma instância
 
 #define   VOLTAGE_AC        220.00          // 220 Volts
 #define   ACS_MPY           6.75            // ganho/calibracao da corrente
+#define   MIN_EFFICIENCY    0.92            // Eficiencia minima definida pela CELPE
 
 double Irms = 0;
 
@@ -24,6 +25,11 @@ void loop()
     Irms = 0;
   }
   /* imprime a corrente no display OLED */
-  Serial.print(Irms, 3);
+  Serial.print(power_calc(Irms), 3);
   Serial.println();
+}
+
+// Calculation of power consumption
+float power_calc(int iRms){
+  return iRms*VOLTAGE_AC*MIN_EFFICIENCY;
 }
