@@ -1,6 +1,6 @@
 # EM DESENVOLVIMENTO........
 
-Monitorador de consumo energético baseado na medição da corrente elétrica dos dispositivos que se deseja monitorar o consumo.
+Monitor de consumo energético baseado na medição da corrente elétrica dos dispositivos que se deseja monitorar o consumo.
 
 ### Materiais:
 > Sensor de Corrente ACS712  
