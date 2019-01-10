@@ -1,13 +1,14 @@
 #!/usr/bin/python
 
 import serial
-from time import strftime, localtime
+import sqlite3
+from time import strftime, localtime, sleep
 
 def conectar(db_file):
     try:
         conn = sqlite3.connect(db_file)
         return conn
-    except Error as e:
+    except Exception as e:
         print(e)
 
     return None
@@ -21,16 +22,16 @@ def inserir_medida(conn, medida):
 
 def main(valor):
     database = "database.db"
- 
     conn = conectar(database)
     with conn:
         hora = strftime("%H:%M:%S", localtime())
-        data = strftime("%d-%m-%Y", localtime())
+        data = strftime("%d/%m/%Y", localtime())
         medida = (hora, data, valor)
         inserir_medida(conn, medida)
 
-ser = serial.Serial('/dev/ttyUSB0', 9600, 8, 'N', 1, timeout=5)
+ser = serial.Serial('/dev/ttyACM1', 9600, 8, 'N', 1, timeout=5)
 while True:
     output = ser.readline()
     if output != '':
         main(output)
+        sleep(1)

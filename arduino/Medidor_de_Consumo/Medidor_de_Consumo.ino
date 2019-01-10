@@ -20,16 +20,16 @@ void loop()
 {
   /* chama função para calculo da corrente */
   Irms = emon1.calcIrms(1996);  // Calculate Irms only
-  if(Irms < 0.15)
+  if(Irms <= 0.15)
   {
     Irms = 0;
   }
-  /* imprime a corrente no display OLED */
-  Serial.print(power_calc(Irms), 3);
-  Serial.println();
+  /* Envia a informaçao por serial */
+  Serial.println(power_calc(Irms), 3);
+  delay(1000);
 }
 
-// Calculation of power consumption
-float power_calc(int iRms){
+/* Calculo da energia consumida */
+float power_calc(float iRms){
   return iRms*VOLTAGE_AC*MIN_EFFICIENCY;
 }
