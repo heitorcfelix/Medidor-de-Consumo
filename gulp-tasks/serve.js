@@ -11,7 +11,7 @@ gulp.task('browser-sync',
   ],
   function() {
     browserSync.init(null, {
-      proxy: 'http://localhost:8080',
+      proxy: 'http://localhost:8080/',
       browser: 'google-chrome',
       port: 5000,
       notify: false
@@ -25,7 +25,7 @@ gulp.task('nodemon',
     var running = false;
 
     return nodemon({
-      script: 'medidor.js',
+      script: 'main.js',
       watch: ['database.db']
     })
     .on('start', function () {
