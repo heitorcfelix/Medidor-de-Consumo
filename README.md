@@ -22,3 +22,7 @@ Em seguida conectar o Arduino a Raspberry Pi pelo cabo USB AM/BM
 > Em outro terminal executar comando: gulp
 
 Para visualização dos dados, a aplicação mantém um servidor web local na raspberry pi em Node.js e utiliza banco de dados SQLite.
+
+### Trabalhos futuros:
+> Gráfico de consumo
+> Filtros de busca (data, hora e aparelho que foi monitorado)
